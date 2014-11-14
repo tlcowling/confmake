@@ -1,3 +1,5 @@
+require 'clamp'
+
 module Confswap
   class CommandLine
 

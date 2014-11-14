@@ -18,7 +18,13 @@ describe 'confswap' do
 		expect(@test_swapper.render_input '').to eql('')
 	end
 
+	it 'should replace the variable with notation %{ITEM1}' do
+		sample_input = "# This is a sample config string \n host: %{ITEM1}"
+    @test_swapper.variables = sample_variables
+		expect(@test_swapper.render_input sample_input).to eql("# This is a sample config string \n host: localhost")
+	end
+
 	def sample_variables
-		{ :item1 => "localhost", :item2 => "8.8.8.8" }
+		{ :ITEM1 => "localhost", :ITEM2 => "8.8.8.8" }
 	end
 end

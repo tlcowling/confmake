@@ -12,10 +12,10 @@ describe 'confswap' do
 
   it 'should output an empty string for an empty input regardless of variablesdefined' do
 		@test_swapper.variables = {}
-		expect(@test_swapper.render_input '').to eql('')
+		@test_swapper.render_input ''
 
 		@test_swapper.variables = sample_variables
-		expect(@test_swapper.render_input '').to eql('')
+		@test_swapper.render_input ''
 	end
 
 	def sample_variables

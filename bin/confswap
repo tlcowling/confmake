@@ -3,3 +3,6 @@
 require 'rubygems'
 $: << File.join(File.dirname(__FILE__), "..", "lib")
 require 'confswap'
+require 'confswap/command'
+
+exit(Confswap::Command.run || 0)

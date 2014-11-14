@@ -1,17 +1,32 @@
 confswap
 ========
+:cow: :cow2: :cow: :cow2:
 
-A simple command line tool to load a configuration file template and fill placeholders with environment variables.
+A simple command line tool to take a configuration file with template placeholders and replace those placeholders with environment variables.
+
+It appears to be taking the shape of a ruby gem...
 
 ## Introduction
 
-This is mostly as a convenience tool for me when creating docker containers, to pass in environment variables.  Its the same
-philosophy as the elasticsearch config which uses {{VARIABLE}} as a means by which to manage configs whose contents vary 
-depending on environments / how you create the container.
+This is mostly for me to use as a convenience tool when creating docker containers.
+
+When working with elasticsearch, I have used their system for using environment variables in the config, and this has worked very well for me especially when using ENV variables with docker run.
 
 ## Usage
 
 Config files can use the %{} style to replace a token in a stirng with a variable
+
+`export GIBLET_STATUS=active`
+`export SPLENETIC_JUICE_FACTOR=10`
+
+example.conf|.toml|.yaml`
+```
+# This is a configuration file
+giblet_status=%{GIBLETS_STATUS}
+splenetic_juice_factor=%{SPLENETIC_JUICE_FACTOR}
+``` 
+
+Then run confswap on the file
 
 ## Requirements
 

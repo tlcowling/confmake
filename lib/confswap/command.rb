@@ -22,8 +22,9 @@ module Confswap
 		     puts Confswap::VERSION
 	       return 0
        end
-
-			  
+			 Confswap::Executor
+			 info = Confswap::ConfigurationFileReader.read configuration_filepath
+			 env_variables = Confswap::EnvironmentVariableReader.read_variables
     end
 		
 		option ['-r','--replace'], :flag, "Replace (Overwrite) the template file withe variable filled output", :attribute_name => :force

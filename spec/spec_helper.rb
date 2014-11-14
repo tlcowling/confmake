@@ -7,3 +7,7 @@ def sample_config
 		"test3=%{ITEM3}"
 	].join("\n")
 end
+
+def sample_variables
+  { :ITEM1 => "localhost", :ITEM2 => "8.8.8.8", :ITEM3 => 1 }
+end

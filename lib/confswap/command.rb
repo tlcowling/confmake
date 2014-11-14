@@ -4,7 +4,7 @@ require 'confswap'
 module Confswap
   class Command < Clamp::Command
     def initialize(*args)
-      super(*args)
+      super(*args)	
     end
 		def help(*args)
       return [

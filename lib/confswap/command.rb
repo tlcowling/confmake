@@ -22,9 +22,15 @@ module Confswap
 		     puts Confswap::VERSION
 	       return 0
        end
+
+			  
     end
 		
-		option ['-t','--test'], "TEST", "Confswap tests this", :attribute_name => :test
-		option ['-v', '--version'], "", "The version of confswap you are running"
+		option ['-r','--replace'], :flag, "Replace (Overwrite) the template file withe variable filled output", :attribute_name => :force
+		option ['-v', '--version'], :flag, "The version of confswap you are running"
+    option ['-o', '--output'], "FILE", "Writes the output from a config to a file", :attribute_name => :output_file
+		option ['--verbose'], :flag, "Be more verbose"
+
+		parameter "TEMPLATE_FILE", "Path to the configuration file", :attribute_name => :configuration_filepath
   end
 end

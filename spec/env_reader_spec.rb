@@ -7,6 +7,6 @@ describe 'Confswap::EnvironmentVariableReader' do
   end
 	it 'should store the environment variable FOO=bar in a hash' do
 		ENV['FOO']="bar"
-		expect(Confswap::EnvironmentVariableReader.read_variables).to include("FOO" => "bar")
+		expect(Confswap::EnvironmentVariableReader.read_variables).to include(:FOO => "bar")
 	end
 end

@@ -3,7 +3,7 @@
 module Confswap
   class EnvironmentVariableReader
 	  def self.read_variables
-      ENV.to_hash
+			Hash[ENV.map { |key, value| [key.to_sym, value] }]
 	  end
   end
 end

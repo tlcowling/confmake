@@ -31,3 +31,17 @@ Then run confswap on the file
 ## Requirements
 
 Requires ruby version > 2.0
+Bundle install the gems
+
+## Developments
+
+Please feel free to fork and whatnot...
+
+Get the dependencies
+``bundle install``
+
+Run the tests
+``rake spec`` 
+
+### Optional:
+Use guard to rerun tests as you go...

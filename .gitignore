@@ -1,3 +1,9 @@
+## Ignore bundle lock
+*.lock
+
+## Ignore Vim swp
+*.swp
+
 *.gem
 *.rbc
 /.config

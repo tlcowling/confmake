@@ -1,6 +1,10 @@
 ## Ignore bundle lock
 *.lock
 
+## My little test files
+test.conf
+test.conf.out
+
 ## Ignore Vim swp
 *.swp
 

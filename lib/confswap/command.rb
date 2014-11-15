@@ -18,30 +18,54 @@ module Confswap
 		end
 
     def execute
-       if ARGV == [ "--version" ]
-		     puts Confswap::VERSION
-	       return 0
+
+       if version?
+				 puts Confswap::VERSION
+				 return 0 
        end
 
-			 output_filepath_default = './test.conf.out' if output_filepath.nil?
-			 
-			 if File.exists? configuration_filepath
-			   configuration_template = Confswap::ConfigurationFileReader.read configuration_filepath
-			   env_variables = Confswap::EnvironmentVariableReader.read_variables
-			   output = configuration_template % env_variables
-			   File.write(output_filepath || output_filepath_default , output)
+       if configuration_filename.nil?
+         puts 'specify a template file or use --help for usage information'
+				 return 0
+       end
+
+			 if File.exists? configuration_filename
+		     swap_config configuration_filename	   			   
 			   return 0
 			 else
-         puts "Error: Configuration template filepath #{configuration_filepath} does not exist"
+         puts "Error: Configuration template file with name #{configuration_filename} does not exist"
 				 return 1
 			 end
     end
+
+		def swap_config configuration_filename
+      output_filename_default = configuration_filename + '.out' if output_filename.nil?
+
+      configuration_template = Confswap::ConfigurationFileReader.read configuration_filename
+      env_variables = Confswap::EnvironmentVariableReader.read_variables
+      
+      output = configuration_template % env_variables
+      output_filename = output_filename || output_filename_default
+      
+      write_file output, output_filename
+		end
+
+		def write_file output_file_contents, output_filename
+      File.write output_filename, output_file_contents unless File.exists? output_filename
+
+      if File.exists? output_filename and force?
+        puts "Overwriting #{output_filename}..."
+        File.write output_filename, output_file_contents
+			else
+        puts "#{output_filename} already exists, use the --force flag to overwrite"
+      end
+		end
 		
-		option ['-f','--force'], :flag, "Overwrite file if it already exists"
-		option ['-v', '--version'], :flag, "The version of confswap you are running"
-    option ['-o', '--output'], "FILE", "Writes the output from a config to a file", :attribute_name => :output_filepath
+		option ['-f','--force'], :flag, "Overwrite file if it already exists", :attribute_name => :force
+		option ['-v', '--version'], :flag, "The version of confswap you are running", :attribute_name => :version
+    option ['-o', '--output'], "FILE", "Specifies the filepath for the file", :attribute_name => :output_filename
 		option ['--verbose'], :flag, "Be more verbose"
 
-		parameter "TEMPLATE_FILE", "Path to the configuration file", :attribute_name => :configuration_filepath
+		parameter "[TEMPLATE_FILE]", "Path to the configuration file", :attribute_name => :configuration_filename
   end
 end

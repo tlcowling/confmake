@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 def sample_config
   [ "# This is a sample config",
 		"# A bunch of lines that will be in a file",

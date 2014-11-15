@@ -1,5 +1,8 @@
-# confswap [![Build Status](https://travis-ci.org/tlcowling/confswap.svg?branch=master)](https://travis-ci.org/tlcowling/confswap) [![Dependency Status](https://gemnasium.com/tlcowling/confswap.svg)](https://gemnasium.com/tlcowling/confswap)[![Code Climate](https://codeclimate.com/github/tlcowling/confswap/badges/gpa.svg)](https://codeclimate.com/github/tlcowling/confswap)
-:cow: :cow2: :cow: :cow2:
+# confswap [![Build Status](https://travis-ci.org/tlcowling/confswap.svg?branch=master)](https://travis-ci.org/tlcowling/confswap) [![Dependency Status](https://gemnasium.com/tlcowling/confswap.svg)](https://gemnasium.com/tlcowling/confswap) [![Code Climate](https://codeclimate.com/github/tlcowling/confswap/badges/gpa.svg)](https://codeclimate.com/github/tlcowling/confswap)
+:cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2: :cow: :cow2:
+
+
+
 
 A simple command line tool to take a configuration file with template placeholders and replace those placeholders with environment variables.
 
@@ -18,7 +21,7 @@ Config files can use the `%{}` style to replace a token in a stirng with a varia
 `export GIBLET_STATUS=active`
 `export SPLENETIC_JUICE_FACTOR=10`
 
-example.conf|.toml|.yaml`
+`example.conf|.toml|.yaml`
 ```
 # This is a configuration file
 giblet_status=%{GIBLETS_STATUS}
@@ -44,3 +47,17 @@ Run the tests
 
 ### Optional:
 Use guard to rerun tests as you go...
+``guard``
+
+## Tasks to do and improvement ideas
+
+- error message when config contains env variable that doesnt exist
+- verbose command
+- summary of what will change?  dry-run maybe?
+- test command.rb
+- acceptance tests
+
+- internationalization :) 
+- document...
+- diff on what has changed in a config if overwriting?
+

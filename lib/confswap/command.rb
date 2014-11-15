@@ -50,14 +50,13 @@ module Confswap
 				puts "#{error.message}.  Your configuration specifies this variable, but it was not found as an environment variable."
 				exit(1)
 			end
-      output_filename = output_filename || output_filename_default
-      
-      write_file output, output_filename
+
+      write_file output, output_filename || output_filename_default
 		end
 
 		def write_file output_file_contents, output_filename
-      File.write output_filename, output_file_contents unless File.exists? output_filename
-
+			return File.write output_filename, output_file_contents unless File.exists? output_filename
+      
       if File.exists? output_filename and force?
         puts "Overwriting #{output_filename}..."
         File.write output_filename, output_file_contents

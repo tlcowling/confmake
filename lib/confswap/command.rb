@@ -25,7 +25,7 @@ module Confswap
        end
 
        if configuration_filename.nil?
-         puts 'specify a template file or use --help for usage information'
+         puts 'Specify a template file or use --help for usage information'
 				 return 0
        end
 
@@ -44,7 +44,12 @@ module Confswap
       configuration_template = Confswap::ConfigurationFileReader.read configuration_filename
       env_variables = Confswap::EnvironmentVariableReader.read_variables
       
-      output = configuration_template % env_variables
+			begin
+        output = configuration_template % env_variables
+			rescue KeyError => error
+				puts "#{error.message}.  Your configuration specifies this variable, but it was not found as an environment variable."
+				exit(1)
+			end
       output_filename = output_filename || output_filename_default
       
       write_file output, output_filename

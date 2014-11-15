@@ -14,7 +14,7 @@ When working with elasticsearch, I have used their system for using environment 
 
 ## Usage
 
-Config files can use the %{} style to replace a token in a stirng with a variable
+Config files can use the `%{}` style to replace a token in a stirng with a variable
 
 `export GIBLET_STATUS=active`
 `export SPLENETIC_JUICE_FACTOR=10`

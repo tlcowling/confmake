@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Tom Cowling"]
   s.email       = 'tom.cowling@gmail.com'
   s.homepage    = 'https://www.tlcowling.com/gems/confswap'
+  s.add_runtime_dependency 'clamp', '~> 0.6.3'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

@@ -11,6 +11,7 @@ begin
   RSpec::Core::RakeTask.new(:spec)
 
   task :default => ['spec']
+  task :test    => ['spec','features']
 
 rescue LoadError
 end

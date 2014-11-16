@@ -7,13 +7,9 @@ Gem::Specification.new do |s|
   s.authors     = ["Tom Cowling"]
   s.email       = 'tom.cowling@gmail.com'
   s.homepage    = 'https://www.tlcowling.com/gems/confswap'
-	s.cert_chain  = ['certs/tlcowling.pem']
-	s.signing_key = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~/gem\z/
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 end
-
-

@@ -51,11 +51,11 @@ Use guard to rerun tests as you go...
 
 ## Tasks to do and improvement ideas
 
-- error message when config contains env variable that doesnt exist
+- ~~error message when config contains env variable that doesnt exist~~
 - verbose command
 - summary of what will change?  dry-run maybe?
 - test command.rb
-- acceptance tests
+- ~~acceptance tests~~
 
 - internationalization :) 
 - document...

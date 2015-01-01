@@ -44,6 +44,12 @@ module Confswap
 
       configuration_template = Confswap::ConfigurationFileReader.read configuration_filename
       env_variables = Confswap::EnvironmentVariableReader.read_variables
+
+      if (!property_file.nil?) || (File.exists? property_file)
+        puts 'pfile specified'
+        env_variables = Confswap::PropertyFileVariableReader.read_variables_from_file property_file
+        p env_variables
+      end
       
       begin
         output = configuration_template % env_variables
@@ -66,9 +72,11 @@ module Confswap
       end
     end
 
+    option ['-p', '--property-file'], "FILE PATH", 'A path to a property file to use for your template variables', :attribute_name => :property_file
+    option ['-e', '--envvar'], "VARIABLE", 'Specify one or more additional environment variables', :multivalued => true
     option ['-f','--force'], :flag, "Overwrite file if it already exists", :attribute_name => :force
     option ['-v', '--version'], :flag, "The version of confswap you are running", :attribute_name => :version
-    option ['-o', '--output'], "FILE", "Specifies the filepath for the file", :attribute_name => :output_filename
+    option ['-o', '--output'], "FILE PATH", "Specifies the filepath for the file", :attribute_name => :output_filename
     option ['--verbose'], :flag, "Be more verbose"
     parameter "[TEMPLATE_FILE]", "Path to the configuration file", :attribute_name => :configuration_filename
   end

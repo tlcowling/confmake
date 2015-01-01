@@ -3,32 +3,26 @@
 
 
 
-
 A simple command line tool to take a configuration file with template placeholders and replace those placeholders with environment variables.
 
-It appears to be taking the shape of a ruby gem...
-
-## Introduction
-
-This is mostly for me to use as a convenience tool when creating docker containers.
-
-When working with elasticsearch, I have used their system for using environment variables in the config, and this has worked very well for me especially when using ENV variables with docker run.
+The variables can come explicitly from the command, or read from a properties file.
 
 ## Usage
 
-Config files can use the `%{}` style to replace a token in a stirng with a variable
+Configuration files come in different shapes and forms, confswap doesn't care if its toml or yaml
 
-`export GIBLET_STATUS=active`
-`export SPLENETIC_JUICE_FACTOR=10`
-
-`example.conf|.toml|.yaml`
 ```
+# example.conf|.toml|.yaml
+
 # This is a configuration file
+
 giblet_status=%{GIBLETS_STATUS}
 splenetic_juice_factor=%{SPLENETIC_JUICE_FACTOR}
 ``` 
 
 Then run confswap on the file
+
+confswap 
 
 ## Requirements
 
@@ -45,19 +39,20 @@ Get the dependencies
 Run the tests
 ``rake spec`` 
 
-### Optional:
-Use guard to rerun tests as you go...
-``guard``
+## Thoughts?
+
+Why not just use sed and replace in some kind of bash script?
+
+I originally used this approach but the script grew unwieldy, maybe I don't do good bash or maybe its just because of lack of testing.  Whilst the benefit of a bash script is that it will run as-is on many systems, I find it better to treat a tool like this as software and therefore use the ecosystems already available to manage dependencies and deploy.  I also enjoy programming in ruby :)
 
 ## Tasks to do and improvement ideas
 
 - ~~error message when config contains env variable that doesnt exist~~
+- ~~acceptance tests~~
+- Read config from properties file
 - verbose command
 - summary of what will change?  dry-run maybe?
-- test command.rb
-- ~~acceptance tests~~
-
-- internationalization :) 
-- document...
 - diff on what has changed in a config if overwriting?
+- test command.rb
+- document...
 

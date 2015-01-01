@@ -4,6 +4,9 @@
 ## My little test files
 test.conf
 test.conf.out
+test.txt
+test.txt.out
+pfile.txt
 
 ## Ignore Vim swp
 *.swp

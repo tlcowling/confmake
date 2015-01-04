@@ -4,8 +4,8 @@ require 'confswap'
 module Confswap
   class Command < Clamp::Command
 
-    def initialize(*args)
-      super(*args)	
+    def initialize *args
+      super *args
     end
 
     def help(*args)
@@ -15,28 +15,28 @@ module Confswap
       ].join("\n")
     end
 
-    def run(*args)
-      super(*args)
+    def run *args
+      super *args
     end
 
     def execute
-       if version?
-         puts Confswap::VERSION
-         return 0 
-       end
+      if version?
+        puts Confswap::VERSION
+        return 0 
+      end
 
-       if configuration_filename.nil?
-         puts 'Specify a template file or use --help for usage information'
-         return 0
-       end
+      if configuration_filename.nil?
+        puts 'Specify a template file or use --help for usage information'
+        return 0
+      end
 
-       if File.exists? configuration_filename
-         swap_config configuration_filename
-         return 0
-       else
-         puts "Error: Configuration template file with name #{configuration_filename} does not exist"
-         return 1
-       end
+      if File.exists? configuration_filename
+        swap_config configuration_filename
+        return 0
+      else
+        puts "Error: Configuration template file with name #{configuration_filename} does not exist"
+        return 1
+      end
     end
 
     def swap_config configuration_filename
@@ -45,7 +45,28 @@ module Confswap
       configuration_template = Confswap::ConfigurationFileReader.read configuration_filename
       env_variables = Confswap::EnvironmentVariableReader.read_variables
 
-      if (!property_file.nil?) and (File.exists? property_file)
+      if envvars
+        envvars.each {|envvar|
+          key_and_value = envvar.split(/=/, 2)
+          key = key_and_value.first
+          value = key_and_value.last
+          if key_and_value.count != 2
+            puts "Invalid envvar specified #{key} and #{value}"
+            return 1 
+          end
+
+          env_variables[key.to_sym]=value
+        }   
+
+        if verbose?
+          puts "Environment variables:"
+          env_variables.each { |var|
+            puts "#{var.first} = #{var.last}"
+          }
+        end
+      end
+
+      if !property_file.nil? and File.exists? property_file
         puts 'pfile specified'
         env_variables = Confswap::PropertyFileVariableReader.read_variables_from_file property_file
         p env_variables
@@ -54,7 +75,7 @@ module Confswap
       begin
         output = configuration_template % env_variables
       rescue KeyError => error
-        puts "#{error.message}.  Your configuration specifies this variable, but it was not found as an environment variable."
+        puts "#{error.message}.  Your configuration requires this variable, but no environment variable was found or specified."
         exit(1)
       end
 
@@ -73,7 +94,7 @@ module Confswap
     end
 
     option ['-p', '--property-file'], "FILE PATH", 'A path to a property file to use for your template variables', :attribute_name => :property_file
-    option ['-e', '--envvar'], "VARIABLE", 'Specify one or more additional environment variables', :multivalued => true
+    option ['-e', '--envvar'], "VARIABLE", 'Specify one or more additional environment variables', :multivalued => true, :attribute_name => :envvars
     option ['-f','--force'], :flag, "Overwrite file if it already exists", :attribute_name => :force
     option ['-v', '--version'], :flag, "The version of confswap you are running", :attribute_name => :version
     option ['-o', '--output'], "FILE PATH", "Specifies the filepath for the file", :attribute_name => :output_filename

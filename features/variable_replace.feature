@@ -24,4 +24,11 @@ Feature: Confswap should replace variables in config template with environment v
     """
     giblets
     """
+  Scenario: Force an overwrite of a config when a file already exists
+    Given a file named "existing.conf" with:
+    """
+    # This is an exising config 
+    """
+    When I run `confswap --output=existing.conf test.conf`
+    Then a file named "existing.conf" should exist
 

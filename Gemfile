@@ -7,7 +7,7 @@ group :development, :test do
 	gem 'simplecov'
 	gem 'travis-lint'
   gem 'rspec'
-	gem 'cucumber'
+	gem 'cucumber', '1.3.18'
 	gem 'guard-rspec'
 	gem 'aruba'
 end

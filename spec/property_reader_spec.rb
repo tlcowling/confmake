@@ -1,16 +1,12 @@
 require 'confswap/property_reader'
 
 describe 'Confswap::PropertyFileVariableReader' do
-  it 'should read environment variables from a file and store them in a hash' do
-    read_variables = Confswap::PropertyFileVariableReader.read_variables_from_file 'tmp/test1vars'
-    expect(read_variables).to be_instance_of Hash
-  end
-
   it 'should split only on first colon and extra newlines' do
     variables = "VAR1: 192.168.0.1\n\n\nVAR2: giblets\nVAR3: this should : : have: colons"
-    File.write 'tmp/test2vars', variables
-    vars = Confswap::PropertyFileVariableReader.read_variables_from_file 'tmp/test2vars'
+    File.write 'tmp/property_vars', variables
+    vars = Confswap::PropertyFileVariableReader.read_variables_from_file 'tmp/property_vars'
 
+    expect(vars).to be_instance_of Hash
     expect(vars.length).to equal(3)
     expect(vars).to eq({
       :VAR1 => '192.168.0.1', 

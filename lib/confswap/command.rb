@@ -45,7 +45,7 @@ module Confswap
       configuration_template = Confswap::ConfigurationFileReader.read configuration_filename
       env_variables = Confswap::EnvironmentVariableReader.read_variables
 
-      if (!property_file.nil?) || (File.exists? property_file)
+      if (!property_file.nil?) and (File.exists? property_file)
         puts 'pfile specified'
         env_variables = Confswap::PropertyFileVariableReader.read_variables_from_file property_file
         p env_variables

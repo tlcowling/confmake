@@ -4,8 +4,10 @@
 ## My little test files
 test.conf
 test.conf.out
+test.out
 test.txt
 test.txt.out
+sample.properties
 pfile.txt
 
 ## Ignore Vim swp

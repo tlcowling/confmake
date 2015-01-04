@@ -19,7 +19,7 @@ Feature: Confswap should read template variables from a properties file
       # This is a descriptive comment
       VAR3: so many giblets
       """
-    When I run `confswap -p sample.properties -o sample.conf config_template_for_properties.conf`
+    When I run `confswap -p sample.properties -t config_template_for_properties.conf sample.conf`
     Then a file named "sample.conf" should exist
     And the file "sample.conf" should contain:
     """

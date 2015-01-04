@@ -1,6 +1,6 @@
 Feature: Confswap should replace variables in config template with environment variables
   Background:
-    Given a file named "test.conf" with:
+    Given a file named "config.template" with:
     """
     # This is a test config
     # that has some variables in it
@@ -11,16 +11,9 @@ Feature: Confswap should replace variables in config template with environment v
       | TEST           | giblets  |
 
   Scenario: Config file should be created with a default name and contain environment variables
-    When I run `confswap test.conf`
-    Then a file named "test.conf.out" should exist
-    And the file "test.conf.out" should contain:
-    """
-    giblets
-    """
-  Scenario: Config file should be created with a specific name and contain environment variables
-    When I run `confswap --output=named.conf test.conf`
-    Then a file named "named.conf" should exist
-    And the file "named.conf" should contain:
+    When I run `confswap -t config.template config.template.out`
+    Then a file named "config.template.out" should exist
+    And the file "config.template.out" should contain:
     """
     giblets
     """
@@ -29,6 +22,6 @@ Feature: Confswap should replace variables in config template with environment v
     """
     # This is an exising config 
     """
-    When I run `confswap --output=existing.conf test.conf`
+    When I run `confswap -t config.template existing.conf`
     Then a file named "existing.conf" should exist
 

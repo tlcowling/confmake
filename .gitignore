@@ -9,6 +9,7 @@ test.txt
 test.txt.out
 sample.properties
 pfile.txt
+spec/tmp/*
 
 ## Ignore Vim swp
 *.swp

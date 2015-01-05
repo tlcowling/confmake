@@ -22,7 +22,7 @@ lang=%{LANG}
 
 ### Environment Variables
 
-```confswap --output=sample1.conf sample1.template```
+```confswap -t sample1.template sample.conf
 
 will use the USER and LANG variables in your shell to populate the template.  You can use ``env`` to see your current environment variables.
 
@@ -30,11 +30,11 @@ additionally you can add additional variables to use, or overwrite extisting env
 
 1. The envvar flag (which takes multiple variables which must be separated by an = sign
 
-```confswap --output=sample2.conf --envvar USER=something --envvar LANG=en_US.UTF-8 sample1.template
+```confswap --envvar USER=something --envvar LANG=en_US.UTF-8 -t sample1.template sample2.conf 
 
 2. explicit setting:
 
-```USER=someoneelse LANG=en_IE.UTF-8 confswap --output=sample3.conf sample1.template```
+```USER=someoneelse LANG=en_IE.UTF-8 confswap -t sample1.template sample3.conf```
 
 ### Properties File
 
@@ -47,8 +47,7 @@ USER: anotherone
 
 Then read it using
 
-```confswap --output=sample3.conf -p sample.properties sample1.template```
-
+```confswap -p sample.properties -t sample1.template sample3.conf```
 
 ## Requirements
 

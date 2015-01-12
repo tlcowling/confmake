@@ -2,7 +2,7 @@
 
 require 'rubygems'
 $: << File.join(File.dirname(__FILE__), "..", "lib")
-require 'confswap'
-require 'confswap/command'
+require 'confmake'
+require 'confmake/command'
 
-exit(Confswap::Command.run || 0)
+exit(Confmake::Command.run || 0)

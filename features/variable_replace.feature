@@ -11,7 +11,7 @@ Feature: Confswap should replace variables in config template with environment v
       | TEST           | giblets  |
 
   Scenario: Config file should be created with a default name and contain environment variables
-    When I run `confswap -t config.template config.template.out`
+    When I run `confmake -t config.template --include-shell-vars config.template.out`
     Then a file named "config.template.out" should exist
     And the file "config.template.out" should contain:
     """
@@ -22,6 +22,6 @@ Feature: Confswap should replace variables in config template with environment v
     """
     # This is an exising config 
     """
-    When I run `confswap -t config.template existing.conf`
+    When I run `confmake -t config.template existing.conf`
     Then a file named "existing.conf" should exist
 

@@ -1,6 +1,6 @@
-Feature: Create a yaml file from the variables passed to confswap
+Feature: Create a yaml file from the variables passed to confmake
   Scenario: Use default name for yaml
-    When I run `confswap -e TEST=giblets -e array=[1,2,3] --yaml --ignore-shell-vars`
+    When I run `confmake -e TEST=giblets -e array=[1,2,3] --yaml`
     Then a file named "your.conf" should exist
     And the file "your.conf" should contain:
     """
@@ -13,7 +13,7 @@ Feature: Create a yaml file from the variables passed to confswap
     """
 
   Scenario: Specify yaml file name and ignore persisted shell variables
-    When I run `confswap -e TEST=giblets -e USER=alsogiblets --ignore-shell-vars --yaml test.yaml`
+    When I run `confmake -e TEST=giblets -e USER=alsogiblets --yaml test.yaml`
     Then a file named "test.yaml" should exist
     And the file "test.yaml" should contain:
     """

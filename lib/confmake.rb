@@ -1,0 +1,5 @@
+require 'confmake/env_reader'
+require 'confmake/conf_reader'
+require 'confmake/property_reader'
+require 'confmake/bash_parser'
+require 'confmake/version'

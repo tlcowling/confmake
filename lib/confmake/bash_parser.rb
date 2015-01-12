@@ -1,6 +1,6 @@
 require 'json'
 
-module Confswap
+module Confmake
   class BashParser
     def self.parse_user_input user_input
       parsed_input = {}

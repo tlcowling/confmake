@@ -1,4 +1,4 @@
-class Confswap::PropertyFileVariableReader
+class Confmake::PropertyFileVariableReader
   def self.read_variables_from_file file_path
     contents = File.read file_path
     self.parse_file_contents contents
@@ -36,7 +36,7 @@ class Confswap::PropertyFileVariableReader
   end
 end
 
-class Confswap::PropertyFileVariableReader::InvalidPropertyFileException < Exception
+class Confmake::PropertyFileVariableReader::InvalidPropertyFileException < Exception
   def initalize message
     super message
   end

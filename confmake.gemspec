@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
-  s.name        = 'confswap'
-  s.version     = '0.1.0'
+  s.name        = 'confmake'
+  s.version     = '0.1.1'
   s.licenses    = ['APACHE2']
-  s.summary     = "Programmatic configuration file maker"
+  s.summary     = "Command line tool to create configuration files"
   s.description = "Create configuration files from templates using environment variables or property lists.  Save as text, yaml and json"
   s.authors     = ["Tom Cowling"]
   s.email       = 'tom.cowling@gmail.com'
-  s.homepage    = 'https://www.tlcowling.com/gems/confswap'
+  s.homepage    = 'https://www.tlcowling.com/gems/confmake'
   s.add_runtime_dependency 'clamp'
   s.add_runtime_dependency 'thor'
 

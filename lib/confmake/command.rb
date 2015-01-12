@@ -1,8 +1,9 @@
 require 'clamp'
-require 'confswap'
+require 'confmake'
 require 'yaml'
+require 'json'
 
-module Confswap
+module Confmake
   class Command < Clamp::Command
 
     def initialize *args
@@ -12,7 +13,7 @@ module Confswap
 
     def help *args
       return [
-        "This is confswap version #{Confswap::VERSION}",
+        "This is confmake version #{Confmake::VERSION}",
         super
       ].join("\n")
     end
@@ -23,12 +24,17 @@ module Confswap
 
     def execute
       if version?
-        puts Confswap::VERSION
+        puts Confmake::VERSION
         return 0 
       end
 
       if yaml?
         save_as_yaml()
+        return 0
+      end
+
+      if json?
+        save_as_json()
         return 0
       end
 
@@ -47,10 +53,10 @@ module Confswap
     end
 
     def gather_variables
-      @env_variables = Confswap::EnvironmentVariableReader.read_variables unless ignore_persisted_shell_variables?
+      @env_variables = Confmake::EnvironmentVariableReader.read_variables if include_persisted_shell_variables?
 
       if !property_file.nil? and File.exists? property_file
-        @env_variables = Confswap::PropertyFileVariableReader.read_variables_from_file property_file
+        @env_variables = Confmake::PropertyFileVariableReader.read_variables_from_file property_file
         puts @env_variables
       end
 
@@ -60,7 +66,7 @@ module Confswap
     def swap_config configuration_filename
       output_filename_default = configuration_filename + '.out' if output_filename.nil?
 
-      configuration_template = Confswap::ConfigurationFileReader.read configuration_filename
+      configuration_template = Confmake::ConfigurationFileReader.read configuration_filename
       gather_variables()
       
       begin
@@ -95,19 +101,22 @@ module Confswap
     end
 
     def save_as_yaml
-      gather_variables()
-
       @env_variables = parse_envvars()
-
-      output_filename_yaml = output_filename || 'conf.yaml'
-      puts "Writing #{output_filename_yaml}"
+      puts "Writing #{output_filename}"
       env_variables_yaml = @env_variables.to_yaml
+      write_file env_variables_yaml, output_filename
+    end
 
-      write_file env_variables_yaml, output_filename_yaml
+    def save_as_json
+      @env_variables = parse_envvars()
+      puts "Writing #{output_filename}"
+      env_variables_json = @env_variables.to_json
+      write_file env_variables_json, output_filename
     end
 
     def parse_envvars
-      parsed_variables = Confswap::BashParser.parse_user_input @env_variables
+      gather_variables()
+      parsed_variables = Confmake::BashParser.parse_user_input @env_variables
       puts "Interpreted user variables: #{parsed_variables}" if verbose?
       parsed_variables
     end
@@ -127,10 +136,11 @@ module Confswap
     option ['-p', '--property-file'], "FILE PATH", 'A path to a property file to use for your template variables', :attribute_name => :property_file
     option ['-e', '--envvar'], "VARIABLE", 'Specify one or more additional environment variables in the form KEY=VALUE', :multivalued => true, :attribute_name => :envvars
     option ['-f','--force'], :flag, "Overwrite file if it already exists", :attribute_name => :force
-    option ['-v', '--version'], :flag, "The version of confswap you are running", :attribute_name => :version
+    option ['-v', '--version'], :flag, "The version of confmake you are running", :attribute_name => :version
     option ['--verbose'], :flag, "Be more verbose"
-    option ['-i', '--ignore-shell-vars'], :flag, "Ignore persisted shell variables", :attribute_name => :ignore_persisted_shell_variables
+    option ['-i', '--include-shell-vars'], :flag, "Include any variables part of the shell profile", :attribute_name => :include_persisted_shell_variables
     option ['-y', '--yaml'], :flag, "Create yaml config from variables", :attribute_name => :yaml
+    option ['-j', '--json'], :flag, "Create json config from variables", :attribute_name => :json
     parameter "[OUTPUT FILE]", "Path to the configuration file", :attribute_name => :output_filename, :default => "your.conf"
   end
 end

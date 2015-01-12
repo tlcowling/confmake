@@ -1,7 +1,7 @@
-Feature: See what version of confswap you're running
-  Scenario: Type confswap --version
-    Given I run `confswap --version` 
+Feature: See what version of confmake you're running
+  Scenario: Type confmake --version
+    Given I run `confmake --version` 
     Then the output should contain:
     """
-    0.1.0
+    0.1.1
     """

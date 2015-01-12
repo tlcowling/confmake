@@ -8,7 +8,7 @@ Feature: Add environment variables with command line
       %{USER}
       """
   Scenario: Single environment variable
-    When I run `confswap -e TEST=giblets -t test.conf test.conf.out`
+    When I run `confmake -e TEST=giblets --include-shell-vars -t test.conf test.conf.out`
     Then a file named "test.conf.out" should exist
     And the file "test.conf.out" should contain:
     """
@@ -16,7 +16,7 @@ Feature: Add environment variables with command line
     """
 
   Scenario: Multiple environment variable
-    When I run `confswap -e TEST=giblets -e USER=alsogiblets -t test.conf test.conf.out`
+    When I run `confmake -e TEST=giblets -e USER=alsogiblets -t test.conf test.conf.out`
     Then a file named "test.conf.out" should exist
     And the file "test.conf.out" should contain:
     """

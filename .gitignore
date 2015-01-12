@@ -1,5 +1,6 @@
 ## Ignore bundle lock
 *.lock
+examples
 
 ## My little test files
 test.conf

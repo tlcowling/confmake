@@ -1,12 +1,12 @@
 require 'clamp'
 require 'confswap'
+require 'yaml'
 
 module Confswap
   class Command < Clamp::Command
 
-    @env_variables
-
     def initialize *args
+      @env_variables = {}
       super *args
     end
 
@@ -27,6 +27,11 @@ module Confswap
         return 0 
       end
 
+      if yaml?
+        save_as_yaml()
+        return 0
+      end
+
       if configuration_filename.nil?
         puts 'Specify a template file or use --help for usage information'
         return 0
@@ -41,19 +46,22 @@ module Confswap
       end
     end
 
+    def gather_variables
+      @env_variables = Confswap::EnvironmentVariableReader.read_variables unless ignore_persisted_shell_variables?
+
+      if !property_file.nil? and File.exists? property_file
+        @env_variables = Confswap::PropertyFileVariableReader.read_variables_from_file property_file
+        puts @env_variables
+      end
+
+      process_envvars() if envvars
+    end
+
     def swap_config configuration_filename
       output_filename_default = configuration_filename + '.out' if output_filename.nil?
 
       configuration_template = Confswap::ConfigurationFileReader.read configuration_filename
-      @env_variables = Confswap::EnvironmentVariableReader.read_variables
-
-      process_envvars() if envvars
-
-      if !property_file.nil? and File.exists? property_file
-        puts 'pfile specified'
-        @env_variables = Confswap::PropertyFileVariableReader.read_variables_from_file property_file
-        puts @env_variables
-      end
+      gather_variables()
       
       begin
         output = configuration_template % @env_variables
@@ -86,6 +94,24 @@ module Confswap
       end
     end
 
+    def save_as_yaml
+      gather_variables()
+
+      @env_variables = parse_envvars()
+
+      output_filename_yaml = output_filename || 'conf.yaml'
+      puts "Writing #{output_filename_yaml}"
+      env_variables_yaml = @env_variables.to_yaml
+
+      write_file env_variables_yaml, output_filename_yaml
+    end
+
+    def parse_envvars
+      parsed_variables = Confswap::BashParser.parse_user_input @env_variables
+      puts "Interpreted user variables: #{parsed_variables}" if verbose?
+      parsed_variables
+    end
+
     def write_file output_file_contents, output_filename
       return File.write output_filename, output_file_contents unless File.exists? output_filename
       
@@ -103,6 +129,8 @@ module Confswap
     option ['-f','--force'], :flag, "Overwrite file if it already exists", :attribute_name => :force
     option ['-v', '--version'], :flag, "The version of confswap you are running", :attribute_name => :version
     option ['--verbose'], :flag, "Be more verbose"
+    option ['-i', '--ignore-shell-vars'], :flag, "Ignore persisted shell variables", :attribute_name => :ignore_persisted_shell_variables
+    option ['-y', '--yaml'], :flag, "Create yaml config from variables", :attribute_name => :yaml
     parameter "[OUTPUT FILE]", "Path to the configuration file", :attribute_name => :output_filename, :default => "your.conf"
   end
 end

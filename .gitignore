@@ -7,8 +7,10 @@ test.conf.out
 test.out
 test.txt
 test.txt.out
+test.yaml
 sample.properties
 pfile.txt
+your.conf
 spec/tmp/*
 
 ## Ignore Vim swp

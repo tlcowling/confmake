@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'confswap'
-  s.version     = '0.0.5'
+  s.version     = '0.1.0'
   s.licenses    = ['APACHE2']
-  s.summary     = "Confswap swaps conf variables!"
-  s.description = "Create a configuration from a template using environment variables"
+  s.summary     = "Programmatic configuration file maker"
+  s.description = "Create configuration files from templates using environment variables or property lists.  Save as text, yaml and json"
   s.authors     = ["Tom Cowling"]
   s.email       = 'tom.cowling@gmail.com'
   s.homepage    = 'https://www.tlcowling.com/gems/confswap'

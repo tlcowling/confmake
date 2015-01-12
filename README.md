@@ -49,6 +49,20 @@ Then read it using
 
 ```confswap -p sample.properties -t sample1.template sample3.conf```
 
+You can also save templates as yaml files!
+
+Pass in variables as you would normally then choose to make a yaml file config
+
+```confswap -e test=giblets -e user=alsogiblets -e array='["1","3","4"]' --yaml your_conf.yaml```
+
+1. Note array must be passed as a json string)
+2. Also note that by default this will also save the environment variables currently saved in the shell, to ignore these, please use the ignore shell vars (-i) flag, i.e. 
+
+```confswap -e test=giblets -e user=alsogiblets -e array='["1","3","4"]' --ignore-shell-vars --force --yaml your_conf.yaml```
+
+
+should create a conf.yaml file with the environments
+
 ## Requirements
 
 Requires ruby version >= 2.0
@@ -77,7 +91,14 @@ I originally used this approach but the script grew unwieldy, maybe I don't do g
 
 - ~~error message when config contains env variable that doesnt exist~~ Version 0.0.2
 - ~~Read config from properties file~~ Version 0.0.4
-- verbose command
+- ~~verbose command~~ Version 0.0.5
+- ~~YAML~~ Version 0.1.0
+
+### Roadmap
+- JSON Version 0.1.1
+- improved logging 0.1.2
+
+- improve verbose messages
 - summary of what will change?  dry-run maybe?
 - diff on what has changed in a config if overwriting?
 - test command.rb
